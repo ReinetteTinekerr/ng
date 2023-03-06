@@ -7,6 +7,7 @@ import { useQuery } from 'react-query'
 // import useSWR from 'swr'
 
 // const fetcher = (...args:any) => fetch(...args).then(res => res.json())
+export const revalidate = 30;
 
 const montserrat = Montserrat({
   weight: '700',
