@@ -27,7 +27,7 @@ interface IAccountInfo {
 
 export default function Home() {
   const { isLoading, error, data, } = useQuery('accounts', () =>
-    fetch('/api/hello', { cache: 'no-store', headers: { 'Cache-Control': 'no-store' } }).then(res =>
+    fetch('/api/hello', { cache: 'no-store', headers: { 'Cache-Control': 'no-store, s-max-age=1, public' } }).then(res =>
       res.json()
     ), {
     onSuccess(data) {
