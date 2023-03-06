@@ -47,6 +47,8 @@ export default function Home() {
     async function getDocumentContent() {
       const res = await fetch('/api/hello', { next: { revalidate: 3 } });
       const data: string = await res.json();
+      console.log('wew');
+
 
       const cleanedData: IAccountInfo[] = getCleaData(data);
       console.log(cleanedData);
