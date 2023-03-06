@@ -4,6 +4,8 @@ import './globals.css'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Montserrat } from 'next/font/google'
+import { QueryClient, QueryClientProvider } from 'react-query'
+const queryClient = new QueryClient()
 
 const montserrat = Montserrat({
   weight: '700',
@@ -28,7 +30,9 @@ export default function RootLayout({
       <body>
         <NavBar />
 
-        {children}
+        <QueryClientProvider client={queryClient}>
+          {children}
+        </QueryClientProvider>
         <Footer />
       </body>
     </html>

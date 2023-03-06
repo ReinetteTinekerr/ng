@@ -3,6 +3,7 @@ import Image from 'next/image'
 
 import { Montserrat } from 'next/font/google'
 import { useState, useEffect } from 'react'
+import { useQuery, QueryClient, QueryClientProvider } from 'react-query'
 
 const montserrat = Montserrat({
   weight: '700',
@@ -19,6 +20,19 @@ interface IAccountInfo {
 
 
 export default function Home() {
+  const { isLoading, error, data, } = useQuery('accounts', () =>
+    fetch('/api/hello').then(res =>
+      res.json()
+    ), {
+    onSuccess(data) {
+      const cleanedData: IAccountInfo[] = getCleaData(data);
+
+      setNintendoGames(cleanedData)
+      setSearchAccouts(cleanedData)
+    },
+  }
+  )
+
   const [search, setSearch] = useState('');
   const [nintendoGames, setNintendoGames] = useState<IAccountInfo[] | []>([]);
   const [searchAccounts, setSearchAccouts] = useState<IAccountInfo[] | []>([]);
@@ -30,8 +44,10 @@ export default function Home() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalNumberOfPages, setTotalNumberOfPages] = useState(Math.ceil(searchAccounts.length / itemsPerPage));
 
+
+
   useEffect(() => {
-    console.log('test');
+    console.log('x');
 
     setTotalNumberOfPages(Math.ceil(searchAccounts.length / itemsPerPage));
     const startIndex = (currentPage - 1) * itemsPerPage;
@@ -43,28 +59,27 @@ export default function Home() {
 
 
 
-  useEffect(() => {
-    async function getDocumentContent() {
-      const res = await fetch('/api/hello', { next: { revalidate: 0 } });
-      const data: string = await res.json();
-      console.log('wew');
+  // useEffect(() => {
+  //   async function getDocumentContent() {
+  //     const res = await fetch('/api/hello', { next: { revalidate: 0 } });
+  //     const data: string = await res.json();
+  //     // console.log('wew');
 
 
-      const cleanedData: IAccountInfo[] = getCleaData(data);
-      console.log(cleanedData);
-      setNintendoGames(cleanedData)
-      setSearchAccouts(cleanedData)
-    }
+  //     const cleanedData: IAccountInfo[] = getCleaData(data);
+  //     // console.log(cleanedData);
+  //     setNintendoGames(cleanedData)
+  //     setSearchAccouts(cleanedData)
+  //   }
 
-    getDocumentContent()
-  }, [])
+  //   getDocumentContent()
+  // }, [])
 
   const getCleaData = (data: string) => {
     const splitData = data.split(/\n\s*\n/);
     const dataWithoutTransactions = splitData.map((acc) => {
       return acc.replace(/-*\s*transactions\s*-*\n/g, "").replace(/-*\s*end transactions\s*-*/g, "").trim()
     })
-
 
     const accounts = []
     for (const acc of dataWithoutTransactions) {
@@ -85,6 +100,22 @@ export default function Home() {
       }
     }
     return accounts;
+
+  }
+
+  if (isLoading) {
+    console.log('Loading...');
+    return <>Loading...</>
+
+  }
+  if (error) {
+    return <>ERROR</>
+  }
+
+
+  if (data) {
+    //   // console.log('data', data.length);
+    // console.log(data);
 
   }
 

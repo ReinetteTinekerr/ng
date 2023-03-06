@@ -20,7 +20,7 @@ export async function GET(request: Request) {
     }
     return acc;
   }, '');
-  console.log(doc);
+  // console.log(doc);
   
   
   return new Response(JSON.stringify(doc), {status: 200})
