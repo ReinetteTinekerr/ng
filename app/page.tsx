@@ -5,6 +5,7 @@ import { Montserrat } from 'next/font/google'
 import { useState, useEffect } from 'react'
 import { useQuery } from 'react-query'
 
+
 const montserrat = Montserrat({
   weight: '700',
   subsets: ['latin'],
@@ -21,7 +22,7 @@ interface IAccountInfo {
 
 export default function Home() {
   const { isLoading, error, data, } = useQuery('accounts', () =>
-    fetch('/api/hello', { cache: 'no-cache', headers: { 'Cache-Control': 'no-store' } }).then(res =>
+    fetch('/api/hello', { cache: 'no-store', headers: { 'Cache-Control': 'no-store' } }).then(res =>
       res.json()
     ), {
     onSuccess(data) {
@@ -77,7 +78,7 @@ export default function Home() {
   // }, [])
 
   const getCleaData = (data: string) => {
-    const splitData = data.split(/\n\s*\n/);
+    const splitData = data.trim().split(/\n\s*\n/);
     const dataWithoutTransactions = splitData.map((acc) => {
       return acc.replace(/-*\s*transactions\s*-*\n/g, "").replace(/-*\s*end transactions\s*-*/g, "").trim()
     })
