@@ -45,7 +45,7 @@ export default function Home() {
 
   useEffect(() => {
     async function getDocumentContent() {
-      const res = await fetch('/api/hello', { next: { revalidate: 60 } });
+      const res = await fetch('/api/hello', { cache: 'no-store' });
       const data: string = await res.json();
 
       const cleanedData: IAccountInfo[] = getCleaData(data);
