@@ -37,6 +37,8 @@ export default function Home() {
 
       setNintendoGames(cleanedData)
       setSearchAccouts(cleanedData)
+
+      const query = queryCache.find('accounts')
       queryCache.clear()
     },
   }
