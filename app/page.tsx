@@ -241,7 +241,7 @@ export default function Home() {
       <div className='mb-2'></div>
       <section className="">
         <div className={`text-center text-4xl text-rose-800 ${permanentMarker.className}`}>Available Accounts</div>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 m-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 m-8">
           {itemsToDisplay.map((acc: any) => <Card key={acc.id} account={acc} />)}
         </div>
         <Pagination totalPages={totalNumberOfPages} currentPage={currentPage} onSetCurrentPage={setCurrentPage} />
@@ -256,7 +256,7 @@ function Card({ account }: any) {
   const regex = /-?\s?\$?\[?\d+(?:\.\d{1,2})?\s?USD\]?/g;
   const regex2 = /\-?\s\$\d+(?:\.\d{1,2})?/g;
   const span = (account.games.length > 6) ? 'col-span-2' : ''
-  return <div className={`hover:scale-[1.05] hover:border-rose-500 transition duration-300 p-1 bg-slate-100 border border-blue-300 rounded-lg shadow ${span}`}>
+  return <div className={`hover:scale-[1.05] hover:border-rose-500 transition duration-300 p-1 bg-slate-100 border ${span} md:col-span-1 border-blue-300 rounded-lg shadow md:col-span-1`}>
     <div className='flex justify-between bg-gray-600  p-3 rounded-md'>
       <div className='bg-rose-500 text-white text-sm lg:text-lg font-medium md:px-2.5 h-6 lg:h-8 rounded-sm pb-1 px-1'>#{account.id}</div>
       <div className='font-bold text-white'>
