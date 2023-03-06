@@ -105,7 +105,7 @@ export default function Home() {
 
   if (isLoading) {
     console.log('Loading...');
-    return <main className='flex justify-center items-center h-52'>Loading...</main>
+    return <main className='flex justify-center items-center text-5xl h-52'>Loading...</main>
 
   }
   if (error) {
