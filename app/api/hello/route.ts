@@ -23,6 +23,6 @@ export async function GET(request: Request) {
   // console.log(doc);
   
   
-  return new Response(JSON.stringify(doc), { status: 200, headers: request.headers})
+  return new Response(JSON.stringify(doc) )
 
 }
