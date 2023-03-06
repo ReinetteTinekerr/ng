@@ -4,7 +4,9 @@ import Image from 'next/image'
 import { Montserrat } from 'next/font/google'
 import { useState, useEffect } from 'react'
 import { useQuery } from 'react-query'
+// import useSWR from 'swr'
 
+// const fetcher = (...args:any) => fetch(...args).then(res => res.json())
 
 const montserrat = Montserrat({
   weight: '700',
