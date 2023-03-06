@@ -45,7 +45,7 @@ export default function Home() {
 
   useEffect(() => {
     async function getDocumentContent() {
-      const res = await fetch('/api/hello', { next: { revalidate: 3 } });
+      const res = await fetch('/api/hello', { next: { revalidate: 0 } });
       const data: string = await res.json();
       console.log('wew');
 
