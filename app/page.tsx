@@ -49,6 +49,7 @@ export default function Home() {
       const data: string = await res.json();
 
       const cleanedData: IAccountInfo[] = getCleaData(data);
+      console.log(cleanedData);
       setNintendoGames(cleanedData)
       setSearchAccouts(cleanedData)
     }

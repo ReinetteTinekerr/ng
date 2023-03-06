@@ -20,6 +20,8 @@ export async function GET(request: Request) {
     }
     return acc;
   }, '');
+  console.log(doc);
+  
   
   
 
