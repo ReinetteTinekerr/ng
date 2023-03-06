@@ -45,7 +45,7 @@ export default function Home() {
 
   useEffect(() => {
     async function getDocumentContent() {
-      const res = await fetch('/api/hello');
+      const res = await fetch('/api/hello', { next: { revalidate: 60 } });
       const data: string = await res.json();
 
       const cleanedData: IAccountInfo[] = getCleaData(data);
@@ -206,9 +206,9 @@ function Card({ account }: any) {
   const regex = /-?\s?\$?\[?\d+(?:\.\d{1,2})?\s?USD\]?/g;
   const regex2 = /\-?\s\$\d+(?:\.\d{1,2})?/g;
   const span = (account.games.length > 6) ? 'col-span-2' : ''
-  return <div className={`p-1 bg-white border border-gray-200 rounded-lg shadow ${span}`}>
+  return <div className={`hover:scale-[1.05] transition duration-300 p-1 bg-white border border-gray-200 rounded-lg shadow ${span}`}>
     <div className='flex justify-between bg-slate-200 p-3 rounded-md shadow-md'>
-      <div className='bg-rose-500 text-white text-lg font-medium  px-2.5 h-8 rounded'>#{account.id}</div>
+      <div className='bg-rose-500 text-white text-sm lg:text-lg font-medium md:px-2.5 h-6 lg:h-8 rounded'>#{account.id}</div>
       <div className='font-bold'>
         <div>Price: {account.price}</div>
         <div>Games: {account.games.length}</div>

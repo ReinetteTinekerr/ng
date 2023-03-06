@@ -1,8 +1,6 @@
 'use client'
 import './globals.css'
 
-import { CacheProvider } from '@chakra-ui/next-js'
-import { ChakraProvider } from '@chakra-ui/react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Montserrat } from 'next/font/google'
@@ -28,14 +26,10 @@ export default function RootLayout({
     <html lang="en">
       <head />
       <body>
-        <CacheProvider>
-          <ChakraProvider>
-            <NavBar />
+        <NavBar />
 
-            {children}
-            <Footer />
-          </ChakraProvider>
-        </CacheProvider>
+        {children}
+        <Footer />
       </body>
     </html>
   )
