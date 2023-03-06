@@ -3,7 +3,7 @@ import Image from 'next/image'
 
 import { Montserrat } from 'next/font/google'
 import { useState, useEffect } from 'react'
-import { useQuery, QueryClient, QueryClientProvider } from 'react-query'
+import { useQuery, QueryCache } from 'react-query'
 
 const montserrat = Montserrat({
   weight: '700',
@@ -20,6 +20,14 @@ interface IAccountInfo {
 
 
 export default function Home() {
+  const queryCache = new QueryCache({
+    onError: error => {
+      console.log(error)
+    },
+    onSuccess: (data, query) => {
+      console.log(data)
+    }
+  })
   const { isLoading, error, data, } = useQuery('accounts', () =>
     fetch('/api/hello', { cache: 'no-store' }).then(res =>
       res.json()
@@ -29,9 +37,11 @@ export default function Home() {
 
       setNintendoGames(cleanedData)
       setSearchAccouts(cleanedData)
+      queryCache.clear()
     },
   }
   )
+
 
   const [search, setSearch] = useState('');
   const [nintendoGames, setNintendoGames] = useState<IAccountInfo[] | []>([]);
