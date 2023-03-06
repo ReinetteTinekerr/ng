@@ -21,7 +21,7 @@ interface IAccountInfo {
 
 export default function Home() {
   const { isLoading, error, data, } = useQuery('accounts', () =>
-    fetch('/api/hello').then(res =>
+    fetch('/api/hello', { cache: 'no-store' }).then(res =>
       res.json()
     ), {
     onSuccess(data) {
@@ -105,7 +105,7 @@ export default function Home() {
 
   if (isLoading) {
     console.log('Loading...');
-    return <>Loading...</>
+    return <main className='flex justify-center items-center h-52'>Loading...</main>
 
   }
   if (error) {
