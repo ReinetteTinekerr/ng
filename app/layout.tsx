@@ -41,8 +41,8 @@ export default function RootLayout({
 
 function NavBar() {
   return <nav className='flex'>
-    <div className='w-20 h-16 flex items-center justify-center bg-white border-black border-[1px]'><Image src="/nintendo-switch.png" alt="Nintendo Switch" width={50} height={50}></Image></div>
-    <div className='h-16 w-full bg-gradient-to-r from-red-600 via-rose-600 to-red-500 border-black border-b-[1px] p-5 flex justify-between text-white items-center'>
+    <div className='w-20 h-16 flex items-center justify-center bg-white shadow-lg'><Image src="/nintendo-switch.png" alt="Nintendo Switch" width={50} height={50}></Image></div>
+    <div className='h-16 w-full bg-gradient-to-r from-red-600 via-rose-600 to-red-500 shadow-lg p-5 flex justify-between text-white items-center'>
       <div className={`${montserrat.className} text-2xl`}>PS GameShop</div>
       <div className='flex flex-row items-center '>
         <div className='flex items-center'>

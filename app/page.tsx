@@ -1,7 +1,7 @@
 'use client'
 import Image from 'next/image'
 
-import { Montserrat } from 'next/font/google'
+import { Montserrat, Permanent_Marker } from 'next/font/google'
 import { useState, useEffect } from 'react'
 import { useQuery } from 'react-query'
 // import useSWR from 'swr'
@@ -14,6 +14,8 @@ const montserrat = Montserrat({
   subsets: ['latin'],
   style: 'normal',
 })
+
+const permanentMarker = Permanent_Marker({ weight: '400', subsets: ['latin'] });
 
 interface IAccountInfo {
   id: number,
@@ -238,7 +240,7 @@ export default function Home() {
       <hr />
       <div className='mb-2'></div>
       <section className="">
-        <div className={`text-center text-2xl text-rose-900 ${montserrat.className}`}>Available Accounts</div>
+        <div className={`text-center text-4xl text-rose-800 ${permanentMarker.className}`}>Available Accounts</div>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 m-8">
           {itemsToDisplay.map((acc: any) => <Card key={acc.id} account={acc} />)}
         </div>
@@ -254,17 +256,17 @@ function Card({ account }: any) {
   const regex = /-?\s?\$?\[?\d+(?:\.\d{1,2})?\s?USD\]?/g;
   const regex2 = /\-?\s\$\d+(?:\.\d{1,2})?/g;
   const span = (account.games.length > 6) ? 'col-span-2' : ''
-  return <div className={`hover:scale-[1.05] transition duration-300 p-1 bg-white border border-gray-200 rounded-lg shadow ${span}`}>
-    <div className='flex justify-between bg-slate-200 p-3 rounded-md shadow-md'>
-      <div className='bg-rose-500 text-white text-sm lg:text-lg font-medium md:px-2.5 h-6 lg:h-8 rounded'>#{account.id}</div>
-      <div className='font-bold'>
+  return <div className={`hover:scale-[1.05] hover:border-rose-500 transition duration-300 p-1 bg-slate-100 border border-blue-300 rounded-lg shadow ${span}`}>
+    <div className='flex justify-between bg-gray-600  p-3 rounded-md'>
+      <div className='bg-rose-500 text-white text-sm lg:text-lg font-medium md:px-2.5 h-6 lg:h-8 rounded-sm pb-1 px-1'>#{account.id}</div>
+      <div className='font-bold text-white'>
         <div>Price: {account.price}</div>
         <div>Games: {account.games.length}</div>
       </div>
     </div>
     <div className='bg-gray-200-100'>
 
-      <div className='p-6 '>
+      <div className='p-2 text-sm md:text-base'>
         <ul>
           {account.games.map((game: any, index: number) => {
 
