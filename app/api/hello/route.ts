@@ -23,6 +23,6 @@ export async function GET(request: Request) {
   // console.log(doc);
   
   
-  return new Response(JSON.stringify(doc), { status: 200, headers: {'Cache-Control': 'no-store'}})
+  return new Response(JSON.stringify(doc), { status: 200, headers: {'Cache-Control': 'no-store, max-age=1'}})
 
 }
