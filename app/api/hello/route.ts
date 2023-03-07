@@ -23,6 +23,6 @@ export async function GET(request: Request) {
   // console.log(doc);
   
   
-  return new Response(JSON.stringify(doc) )
+  return new Response(JSON.stringify(doc), {'headers': {'Keep-Alive': 'timeout=5'}} )
 
 }

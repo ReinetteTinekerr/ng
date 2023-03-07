@@ -7,7 +7,8 @@ import { useQuery } from 'react-query'
 // import useSWR from 'swr'
 
 // const fetcher = (...args:any) => fetch(...args).then(res => res.json())
-export const revalidate = 30;
+// export const revalidate = 30;
+
 
 const montserrat = Montserrat({
   weight: '700',
@@ -23,7 +24,12 @@ interface IAccountInfo {
   games: string[],
 }
 
+const randomSeededPokemon = (seed: number) => {
+  const x = Math.sin(seed) * 10000;
+  console.log(x - Math.floor(x));
 
+  return Math.round((x - Math.floor(x)) * 500)
+}
 
 export default function Home() {
   const { isLoading, error, data, } = useQuery('accounts', () =>
@@ -32,6 +38,8 @@ export default function Home() {
     ), {
     onSuccess(data) {
       const cleanedData: IAccountInfo[] = getCleaData(data);
+      const ids = cleanedData.map((acc) => acc.id);
+      setAccountsIds(ids)
 
       setNintendoGames(cleanedData)
       setSearchAccouts(cleanedData)
@@ -40,18 +48,35 @@ export default function Home() {
   )
 
 
+
   const [search, setSearch] = useState('');
+  const [accountsIds, setAccountsIds] = useState<number[]>([]);
+  const [pokemons, setPokemons] = useState<any>({});
   const [nintendoGames, setNintendoGames] = useState<IAccountInfo[] | []>([]);
   const [searchAccounts, setSearchAccouts] = useState<IAccountInfo[] | []>([]);
   const [itemsToDisplay, setItemsToDisplay] = useState<IAccountInfo[] | []>([]);
   const [ascending, setAscending] = useState(true);
-
 
   const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
   const [totalNumberOfPages, setTotalNumberOfPages] = useState(Math.ceil(searchAccounts.length / itemsPerPage));
 
 
+  useEffect(() => {
+    async function fetchPokemons() {
+      const pokemonsObj: any = {}
+      for (let index = 0; index < accountsIds.length; index++) {
+        const id = accountsIds[index];
+        const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${randomSeededPokemon(id)}`);
+        const data = await res.json();
+        const pokemon = { 'sprite': data.sprites.other.dream_world.front_default, 'name': data.name };
+        // pokemonsList.push(pokemon);
+        pokemonsObj[id] = pokemon;
+      }
+      setPokemons(pokemonsObj);
+    }
+    fetchPokemons();
+  }, [accountsIds]);
 
   useEffect(() => {
     console.log('x');
@@ -113,14 +138,15 @@ export default function Home() {
   if (isLoading) {
     console.log('Loading...');
     return <main className='flex justify-center items-center text-5xl h-screen'>
+      <Image src={'/mario.gif'} width={280} height={280} alt='Loading...' />
 
-      <div role="status">
+      {/* <div role="status">
         <svg aria-hidden="true" className="inline w-10 h-10 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor" />
           <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill" />
         </svg>
         <span className="sr-only">Loading...</span>
-      </div>
+      </div> */}
     </main>
 
   }
@@ -240,9 +266,15 @@ export default function Home() {
       <hr />
       <div className='mb-2'></div>
       <section className="">
-        <div className={`text-center text-4xl text-rose-800 ${permanentMarker.className}`}>Available Accounts</div>
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 m-8">
-          {itemsToDisplay.map((acc: any) => <Card key={acc.id} account={acc} />)}
+        <div className={`text-center text-3xl md:text-4xl text-rose-800 ${permanentMarker.className}`}>Available Accounts</div>
+        <div className='relative bottom-28 flex items-center justify-center'>
+          <Image className='-z-10' src={'/pokemon-loading.gif'} height={10} width={300} alt='dugtrio' />
+        </div>
+        <div className="relative bottom-48 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 m-8">
+          {itemsToDisplay.map((acc: any) => {
+            const pokemon = pokemons[acc.id];
+            return <Card key={acc.id} account={acc} pokemon={pokemon} />
+          })}
         </div>
         <Pagination totalPages={totalNumberOfPages} currentPage={currentPage} onSetCurrentPage={setCurrentPage} />
       </section>
@@ -251,31 +283,39 @@ export default function Home() {
 }
 
 
-function Card({ account }: any) {
+function Card({ account, pokemon }: any) {
+  let sprite = '';
+  if (pokemon !== undefined && pokemon.sprite !== undefined) {
+    sprite = pokemon.sprite;
+    // sprite = `bg-[url('https://${sprite}')]`
+  }
+  console.log(sprite);
+
+
   // const regex = /-\?\[?\d+(?:\.\d)?\sUSD\]?/g;
   const regex = /-?\s?\$?\[?\d+(?:\.\d{1,2})?\s?USD\]?/g;
   const regex2 = /\-?\s\$\d+(?:\.\d{1,2})?/g;
   const span = (account.games.length > 6) ? 'col-span-2' : ''
-  return <div className={`hover:scale-[1.05] hover:border-rose-500 transition duration-300 p-1 bg-slate-100 border ${span} md:col-span-1 border-blue-300 rounded-lg shadow md:col-span-1`}>
-    <div className='flex justify-between bg-gray-600  p-3 rounded-md'>
+  return <div style={{ backgroundImage: `url(${sprite})` }} className={`bg-no-repeat bg-center bg-contain hover:scale-[1.05] hover:border-rose-500 transition duration-300 p-1 bg-slate-100 border ${span} md:col-span-1 border-blue-300 rounded-lg shadow md:col-span-1`}>
+    <div className='flex justify-between bg-cyan-900/95  p-3 rounded-md'>
       <div className='bg-rose-500 text-white text-sm lg:text-lg font-medium md:px-2.5 h-6 lg:h-8 rounded-sm pb-1 px-1'>#{account.id}</div>
       <div className='font-bold text-white'>
         <div>Price: {account.price}</div>
         <div>Games: {account.games.length}</div>
       </div>
     </div>
-    <div className='bg-gray-200-100'>
+    <div className='bg-zinc-700/80'>
 
-      <div className='p-2 text-sm md:text-base'>
+      <div className='p-2 text-sm text-white md:text-base'>
         <ul>
           {account.games.map((game: any, index: number) => {
 
             const outputString1 = game.replace(regex, "");
             const outputString2 = outputString1.replace(regex2, "");
-            return <>
-              <li key={index}>{outputString2}</li>
+            return <li key={index}>{outputString2}
               <hr />
-            </>
+            </li>
+
           })}
         </ul>
 
