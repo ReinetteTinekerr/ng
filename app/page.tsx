@@ -26,8 +26,6 @@ interface IAccountInfo {
 
 const randomSeededPokemon = (seed: number) => {
   const x = Math.sin(seed) * 10000;
-  console.log(x - Math.floor(x));
-
   return Math.round((x - Math.floor(x)) * 500)
 }
 
@@ -267,10 +265,7 @@ export default function Home() {
       <div className='mb-2'></div>
       <section className="">
         <div className={`text-center text-3xl md:text-4xl text-rose-800 ${permanentMarker.className}`}>Available Accounts</div>
-        <div className='relative bottom-28 flex items-center justify-center'>
-          <Image className='-z-10' src={'/pokemon-loading.gif'} height={10} width={300} alt='dugtrio' />
-        </div>
-        <div className="relative bottom-48 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 m-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 m-8">
           {itemsToDisplay.map((acc: any) => {
             const pokemon = pokemons[acc.id];
             return <Card key={acc.id} account={acc} pokemon={pokemon} />

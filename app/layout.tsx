@@ -61,7 +61,7 @@ function NavBar() {
 
 function Footer() {
   const today = new Date();
-  return <footer className='h-32 bg-gray-800 flex justify-center items-center'>
+  return <footer className=' h-32 bg-gray-800 flex justify-center items-center flex-row'>
     <div className='text-white'>
       <span className={montserratItalic.className}> ©{today.getFullYear()} - NintendoShopGame.ph </span>
     </div>
