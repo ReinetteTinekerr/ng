@@ -3,7 +3,8 @@ import Image from 'next/image'
 
 import { Montserrat, Permanent_Marker } from 'next/font/google'
 import { useState, useEffect } from 'react'
-import { useQuery } from 'react-query'
+import { useQuery } from 'react-query';
+import { useRouter } from 'next/navigation';
 // import useSWR from 'swr'
 
 // const fetcher = (...args:any) => fetch(...args).then(res => res.json())
@@ -30,6 +31,8 @@ const randomSeededPokemon = (seed: number) => {
 }
 
 export default function Home() {
+  const router = useRouter();
+  router.refresh();
   const { isLoading, error, data, } = useQuery('accounts', () =>
     fetch('/api/hello', { cache: 'no-store', headers: { 'Cache-Control': 'no-store, max-age=1, private' } }).then(res =>
       res.json()
@@ -183,7 +186,7 @@ export default function Home() {
       const hasCommonString = queries.some(str1 =>
         nintendoGames[i].games.some((str2: any) => str2.toLowerCase().includes(str1.toLowerCase()))
       );
-      if (hasCommonString) {
+      if (hasCommonString || queries.includes(nintendoGames[i].id.toString())) {
         matches.push(nintendoGames[i]);
       }
       // }
@@ -271,7 +274,7 @@ export default function Home() {
             return <Card key={acc.id} account={acc} pokemon={pokemon} />
           })}
         </div>
-        <Pagination totalPages={totalNumberOfPages} currentPage={currentPage} onSetCurrentPage={setCurrentPage} />
+        <Pagination totalPages={totalNumberOfPages} totalItems={searchAccounts.length} currentPage={currentPage} onSetCurrentPage={setCurrentPage} />
       </section>
     </main >
   )
@@ -299,7 +302,7 @@ function Card({ account, pokemon }: any) {
         <div>Games: {account.games.length}</div>
       </div>
     </div>
-    <div className='bg-zinc-700/80'>
+    <div className='hover:bg-zinc-700/70 bg-zinc-700/80 rounded-md mt-1'>
 
       <div className='p-2 text-sm text-white md:text-base'>
         <ul>
@@ -319,29 +322,46 @@ function Card({ account, pokemon }: any) {
   </div>
 }
 
-function Pagination({ totalPages, currentPage, onSetCurrentPage }: any) {
+function Pagination({ totalPages, currentPage, onSetCurrentPage, totalItems }: any) {
   return <div>
 
     <nav aria-label="Page navigation example">
       <ul className="flex items-center justify-center -space-x-px mb-5">
         <li>
-          <button onClick={() => {
+          <button disabled={currentPage === 1} onClick={() => {
+            onSetCurrentPage(1);
+          }} className="disabled:bg-gray-50 block px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 ">
+            {/* <span className="sr-only">Previous</span>
+            <svg aria-hidden="true" className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd"></path></svg> */}
+            First
+          </button>
+        </li>
+        <li>
+          <button disabled={currentPage === 1} onClick={() => {
             onSetCurrentPage(Math.max(1, currentPage - 1));
-          }} className="block px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 ">
+          }} className="disabled:bg-gray-50 block px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 ">
             <span className="sr-only">Previous</span>
             <svg aria-hidden="true" className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd"></path></svg>
           </button>
         </li>
         <li>
-          <a href="#" className="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 ">{currentPage} / {totalPages}</a>
+          <a href="#" className="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 ">{currentPage} / {totalPages} | ({totalItems})</a>
         </li>
         <li>
-          <button onClick={() => {
+          <button disabled={currentPage === totalPages} onClick={() => {
             onSetCurrentPage(Math.min(currentPage + 1, totalPages));
 
-          }} className="block px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 ">
+          }} className="disabled:bg-gray-50 block px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300  hover:bg-gray-100 ">
             <span className="sr-only">Next</span>
             <svg aria-hidden="true" className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd"></path></svg>
+          </button>
+        </li>
+        <li>
+          <button disabled={currentPage === totalPages} onClick={() => {
+            onSetCurrentPage(totalPages);
+
+          }} className="disabled:bg-gray-50 block px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 ">
+            Last
           </button>
         </li>
       </ul>
