@@ -300,7 +300,7 @@ function Card({ account, pokemon }: any) {
 
           <button
             className='relative top-2'
-            onClick={() => navigator.clipboard.writeText(`#${account.id}\nPokemon-code: ${pokemon.name}\nGames:\n${account.games.join('\n')}
+            onClick={() => navigator.clipboard.writeText(`#${account.id}\nPokemonCode: ${pokemon.name.toUpperCase()}\nGames:\n${account.games.join('\n')}
             `)}>
             <svg className='bg-slate-300 border hover:bg-slate-400 hover:scale-[1.05] rounded-md' fill="" viewBox="0 0 15 15" height="1.5em" width="2em" >
               <path
