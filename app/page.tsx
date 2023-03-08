@@ -189,6 +189,7 @@ export default function Home() {
       // }
     }
     setSearchAccouts(matches)
+    setCurrentPage(1);
 
   }
   const onClickSort = () => {
@@ -293,7 +294,33 @@ function Card({ account, pokemon }: any) {
   const span = (account.games.length > 6) ? 'col-span-2' : ''
   return <div style={{ backgroundImage: `url(${sprite})` }} className={`bg-no-repeat bg-center bg-contain hover:scale-[1.05] hover:border-rose-500 transition duration-300 p-1 bg-slate-100 border ${span} md:col-span-1 border-blue-300 rounded-lg shadow md:col-span-1`}>
     <div className='flex justify-between bg-cyan-900/95  p-3 rounded-md'>
-      <div className='bg-rose-500 text-white text-sm lg:text-lg font-medium md:px-2.5 h-6 lg:h-8 rounded-sm pb-1 px-1'>#{account.id}</div>
+      <div>
+        <div className='bg-rose-500 text-white text-sm lg:text-lg font-medium md:px-2.5 h-6 lg:h-8 rounded-sm pb-1 px-1'>#{account.id}</div>
+        <a
+          className="transititext-primary text-primary transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 active:text-primary-700 dark:text-primary-400 dark:hover:text-primary-500 dark:focus:text-primary-500 dark:active:text-primary-600"
+          data-te-toggle="tooltip"
+          title="Copy"
+        >
+
+          <button
+            className='relative top-2'
+            onClick={() => navigator.clipboard.writeText(`
+            #${account.id}
+            Pokemon-code: ${pokemon.name}
+            Games:
+            ${account.games}
+            `)}>
+            <svg className='bg-slate-300 border hover:bg-slate-400 hover:scale-[1.05] rounded-md' fill="" viewBox="0 0 15 15" height="1.5em" width="2em" >
+              <path
+                fill="currentColor"
+                fillRule="evenodd"
+                d="M1 9.5A1.5 1.5 0 002.5 11H4v-1H2.5a.5.5 0 01-.5-.5v-7a.5.5 0 01.5-.5h7a.5.5 0 01.5.5V4H5.5A1.5 1.5 0 004 5.5v7A1.5 1.5 0 005.5 14h7a1.5 1.5 0 001.5-1.5v-7A1.5 1.5 0 0012.5 4H11V2.5A1.5 1.5 0 009.5 1h-7A1.5 1.5 0 001 2.5v7zm4-4a.5.5 0 01.5-.5h7a.5.5 0 01.5.5v7a.5.5 0 01-.5.5h-7a.5.5 0 01-.5-.5v-7z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </button>
+        </a >
+      </div>
       <div className='font-bold text-white'>
         <div>Price: {account.price}</div>
         <div>Games: {account.games.length}</div>
