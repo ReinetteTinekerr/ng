@@ -4,8 +4,6 @@ import Image from 'next/image'
 import { Montserrat, Permanent_Marker } from 'next/font/google'
 import { useState, useEffect } from 'react'
 import { useQuery } from 'react-query';
-import { useRouter } from 'next/navigation';
-// import useSWR from 'swr'
 
 // const fetcher = (...args:any) => fetch(...args).then(res => res.json())
 // export const revalidate = 30;
@@ -31,8 +29,6 @@ const randomSeededPokemon = (seed: number) => {
 }
 
 export default function Home() {
-  const router = useRouter();
-  router.refresh();
   const { isLoading, error, data, } = useQuery('accounts', () =>
     fetch('/api/hello', { cache: 'no-store', headers: { 'Cache-Control': 'no-store, max-age=1, private' } }).then(res =>
       res.json()

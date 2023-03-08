@@ -1,7 +1,10 @@
-const docs = require('@googleapis/docs')
+import { NextResponse } from "next/server";
 
+const docs = require('@googleapis/docs')
 const auth = new docs.auth.GoogleAuth({ keyFilename: './secret.json', scopes: ['https://www.googleapis.com/auth/documents.readonly'] })
 export async function GET(request: Request) {
+  const headers = request.headers;
+  console.log(headers)
   
   const authClient = await auth.getClient();
   const client = await docs.docs({
@@ -21,6 +24,6 @@ export async function GET(request: Request) {
     return acc;
   }, '');
   
-  return new Response(JSON.stringify(doc), {'headers': {'Keep-Alive': 'timeout=5'}} )
+  return NextResponse.json(doc) ;
 
 }
