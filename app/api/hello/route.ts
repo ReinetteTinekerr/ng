@@ -24,6 +24,6 @@ export async function GET(request: Request) {
     return acc;
   }, '');
   
-  return NextResponse.json(doc) ;
+  return new Response(JSON.stringify(doc)) ;
 
 }
