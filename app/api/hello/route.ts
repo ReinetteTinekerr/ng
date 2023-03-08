@@ -4,7 +4,7 @@ const docs = require('@googleapis/docs')
 export async function GET(request: Request) {
   const headers = request.headers;
   
-  const auth = new docs.auth.GoogleAuth({ keyFilename: './secret.json', scopes: ['https://www.googleapis.com/auth/documents.readonly'] })
+  const auth = new docs.auth.GoogleAuth({  scopes: ['https://www.googleapis.com/auth/documents.readonly'] })
   const authClient = await auth.getClient();
   const client = await docs.docs({
     version: 'v1',
