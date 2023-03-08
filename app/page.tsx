@@ -30,7 +30,7 @@ const randomSeededPokemon = (seed: number) => {
 
 export default function Home() {
   const { isLoading, error, data, } = useQuery('accounts', () =>
-    fetch('/api/hello', { cache: 'no-store', headers: { 'Cache-Control': 'no-store, max-age=1, private' } }).then(res =>
+    fetch('/api/hello', { cache: 'no-store' }).then(res =>
       res.json()
     ), {
     onSuccess(data) {
