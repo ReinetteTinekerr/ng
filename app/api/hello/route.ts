@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-
 const docs = require('@googleapis/docs')
+
 export async function GET(request: Request) {
   const headers = request.headers;
   console.log(headers)
@@ -13,7 +13,6 @@ export async function GET(request: Request) {
   });
   const res = await client.documents.get({ documentId: '1EFCR_D8mosNVDUBMYhc-2Q8srI758kXvjF-yIZm-OP0' })
   const { data } = res;
-  // console.log(data);
   const doc = data.body.content.reduce((acc:any, cur:any) => {
     if (cur.paragraph) {
       acc += cur.paragraph.elements.reduce(
@@ -23,7 +22,8 @@ export async function GET(request: Request) {
     }
     return acc;
   }, '');
+  console.log(JSON.stringify(doc));
   
-  return new Response(JSON.stringify(doc)) ;
+  return new Response(JSON.stringify(doc), {status:200}) ;
 
 }
