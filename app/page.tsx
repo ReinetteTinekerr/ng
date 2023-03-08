@@ -76,7 +76,6 @@ export default function Home() {
   }, [accountsIds]);
 
   useEffect(() => {
-    console.log('x');
 
     setTotalNumberOfPages(Math.ceil(searchAccounts.length / itemsPerPage));
     const startIndex = (currentPage - 1) * itemsPerPage;
@@ -133,7 +132,6 @@ export default function Home() {
   }
 
   if (isLoading) {
-    console.log('Loading...');
     return <main className='flex justify-center items-center text-5xl h-screen'>
       <Image src={'/mario.gif'} width={280} height={280} alt='Loading...' />
 
@@ -178,7 +176,6 @@ export default function Home() {
 
 
       const queries = query.toLowerCase().trim().split(" ");
-      console.log(nintendoGames);
 
       const hasCommonString = queries.some(str1 =>
         nintendoGames[i].games.some((str2: any) => str2.toLowerCase().includes(str1.toLowerCase()))
@@ -285,7 +282,6 @@ function Card({ account, pokemon }: any) {
     sprite = pokemon.sprite;
     // sprite = `bg-[url('https://${sprite}')]`
   }
-  console.log(sprite);
 
 
   // const regex = /-\?\[?\d+(?:\.\d)?\sUSD\]?/g;
@@ -304,11 +300,7 @@ function Card({ account, pokemon }: any) {
 
           <button
             className='relative top-2'
-            onClick={() => navigator.clipboard.writeText(`
-            #${account.id}
-            Pokemon-code: ${pokemon.name}
-            Games:
-            ${account.games}
+            onClick={() => navigator.clipboard.writeText(`#${account.id}\nPokemon-code: ${pokemon.name}\nGames:\n${account.games.join('\n')}
             `)}>
             <svg className='bg-slate-300 border hover:bg-slate-400 hover:scale-[1.05] rounded-md' fill="" viewBox="0 0 15 15" height="1.5em" width="2em" >
               <path
