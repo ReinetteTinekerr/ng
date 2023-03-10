@@ -318,7 +318,7 @@ function Card({ account, pokemon }: any) {
         <div>Games: {account.games.length}</div>
       </div>
     </div>
-    <div className='hover:bg-zinc-700/70 bg-zinc-700/80 rounded-md mt-1'>
+    <div className='hover:bg-zinc-700/95 bg-zinc-700/80 rounded-md mt-1'>
 
       <div className='p-2 text-sm text-white md:text-base'>
         <ul>
