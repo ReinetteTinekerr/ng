@@ -54,7 +54,7 @@ export default function Home() {
   const [itemsToDisplay, setItemsToDisplay] = useState<IAccountInfo[] | []>([]);
   const [ascending, setAscending] = useState(true);
 
-  const itemsPerPage = 10;
+  const itemsPerPage = 20;
   const [currentPage, setCurrentPage] = useState(1);
   const [totalNumberOfPages, setTotalNumberOfPages] = useState(Math.ceil(searchAccounts.length / itemsPerPage));
 
