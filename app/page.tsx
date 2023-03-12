@@ -118,6 +118,8 @@ export default function Home() {
         const id = splitData[0].match(/\d+/g)
         const price = splitData[1].match(/\d+/g)
         const games = splitData.slice(2);
+        games.sort();
+        // const sortedGames = games.sort((a,b) => a - b)
 
         if (id !== null && price !== null && games !== null) {
           accounts.push({ id: Number.parseInt(id[0]), price: Number.parseInt(price[0]), games: games })
