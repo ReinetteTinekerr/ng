@@ -240,7 +240,7 @@ export default function Home() {
           <label htmlFor="simple-search" className="sr-only">Search</label>
           <input value={search} onChange={(q) => searchResults(q.target.value)} type="text" id="simple-search" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  " placeholder="Search" />
         </div>
-        <div className='flex flex-row items-center'>
+        <div className='flex'>
           {
             <button onClick={onClickSort} className='mx-2 '>
               {ascending ? <Image src={"/arrow-up.png"} width={30} height={30} alt="ascending" /> :
@@ -258,11 +258,11 @@ export default function Home() {
             </select>
           </div>
         </div>
-      </div>
+      </div >
       <hr />
       <div className='mb-2'></div>
       <section className="">
-        <div className={`text-center text-2xl md:text-4xl text-rose-800 ${pressStart2P.className}`}>Available Accounts</div>
+        <div className={`text-center text-xl md:text-4xl text-rose-800 ${pressStart2P.className}`}>Available Accounts</div>
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 m-8">
           {itemsToDisplay.map((acc: any) => {
             const pokemon = pokemons[acc.id];
@@ -289,9 +289,9 @@ function Card({ account, pokemon }: any) {
   const regex2 = /\-?\s\$\d+(?:\.\d{1,2})?/g;
   const span = (account.games.length > 6) ? 'col-span-2' : ''
   return <div style={{ backgroundImage: `url(${sprite})` }} className={`bg-no-repeat bg-center bg-contain hover:scale-[1.05] hover:border-rose-500 transition duration-300 p-1 bg-slate-100 border ${span} md:col-span-1  rounded-lg shadow `}>
-    <div className='flex justify-between bg-gray-900/95  p-2 rounded-md'>
-      <div className='flex text-center items-center'>
-        <div className='bg-rose-500 text-white text-sm font-semibold  rounded-md p-1'>#{account.id}</div>
+    <div className='flex justify-between bg-gray-900/95  p-1 md:p-2 px-2 rounded-md'>
+      <div className='flex flex-col md:flex-row text-center items-center'>
+        <div className='bg-rose-500 text-white text-sm font-semibold  rounded-md p-1 md:py-1 py-0'>#{account.id}</div>
         <div className='w-2'></div>
         <a
           className="transititext-primary text-primary transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 active:text-primary-700 dark:text-primary-400 dark:hover:text-primary-500 dark:focus:text-primary-500 dark:active:text-primary-600"
@@ -303,7 +303,7 @@ function Card({ account, pokemon }: any) {
             className='relative top-1'
             onClick={() => navigator.clipboard.writeText(`#${account.id}\n[Pokemon: ${pokemon.name.toUpperCase()}]\nGames:\n${account.games.join('\n')}
             `)}>
-            <svg className='bg-slate-300 border hover:bg-slate-400 hover:scale-[1.05] rounded-md' fill="" viewBox="0 0 15 15" height="1.5em" width="2em" >
+            <svg className='bg-slate-300 border hover:bg-slate-400 hover:scale-[1.05] rounded-md' fill="" viewBox="0 0 15 15" height="1.2em" width="2em" >
               <path
                 fill="currentColor"
                 fillRule="evenodd"
