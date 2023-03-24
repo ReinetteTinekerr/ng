@@ -46,7 +46,7 @@ function NavBar() {
   return <nav className='flex'>
     <div className='w-20 h-16 flex items-center justify-center bg-white shadow-lg'><Image src="/nintendo-switch.png" alt="Nintendo Switch" width={50} height={50}></Image></div>
     <div className='h-16 w-full bg-gradient-to-r from-red-600 via-rose-600 to-red-500 shadow-md p-5 flex justify-between text-white items-center'>
-      <div className={`${pressStart2P.className} text-xl`}>GameShop</div>
+      <div className={`${pressStart2P.className} text-lg`}>GameShop</div>
       <div className='flex flex-row items-center '>
         <div className='flex items-center'>
           <Link href={"https://www.facebook.com/psgameshop.ph"} target={"_blank"}>

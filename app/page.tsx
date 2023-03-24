@@ -262,7 +262,7 @@ export default function Home() {
       <hr />
       <div className='mb-2'></div>
       <section className="">
-        <div className={`text-center text-xl md:text-4xl text-rose-800 ${pressStart2P.className}`}>Available Accounts</div>
+        <div className={`text-center text-[16px] md:text-3xl text-rose-800 ${pressStart2P.className}`}>Available Accounts</div>
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 m-8">
           {itemsToDisplay.map((acc: any) => {
             const pokemon = pokemons[acc.id];
