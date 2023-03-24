@@ -1,21 +1,19 @@
 'use client'
 import Image from 'next/image'
 
-import { Montserrat, Permanent_Marker } from 'next/font/google'
+import { Press_Start_2P } from 'next/font/google'
 import { useState, useEffect } from 'react'
 import { useQuery } from 'react-query';
 
 // const fetcher = (...args:any) => fetch(...args).then(res => res.json())
 // export const revalidate = 30;
 
-
-const montserrat = Montserrat({
-  weight: '700',
+const pressStart2P = Press_Start_2P({
+  weight: '400',
   subsets: ['latin'],
   style: 'normal',
 })
 
-const permanentMarker = Permanent_Marker({ weight: '400', subsets: ['latin'] });
 
 interface IAccountInfo {
   id: number,
@@ -264,7 +262,7 @@ export default function Home() {
       <hr />
       <div className='mb-2'></div>
       <section className="">
-        <div className={`text-center text-3xl md:text-4xl text-rose-800 ${permanentMarker.className}`}>Available Accounts</div>
+        <div className={`text-center text-2xl md:text-4xl text-rose-800 ${pressStart2P.className}`}>Available Accounts</div>
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 m-8">
           {itemsToDisplay.map((acc: any) => {
             const pokemon = pokemons[acc.id];
@@ -290,10 +288,11 @@ function Card({ account, pokemon }: any) {
   const regex = /-?\s?\$?\[?\d+(?:\.\d{1,2})?\s?USD\]?/g;
   const regex2 = /\-?\s\$\d+(?:\.\d{1,2})?/g;
   const span = (account.games.length > 6) ? 'col-span-2' : ''
-  return <div style={{ backgroundImage: `url(${sprite})` }} className={`bg-no-repeat bg-center bg-contain hover:scale-[1.05] hover:border-rose-500 transition duration-300 p-1 bg-slate-100 border ${span} md:col-span-1 border-blue-300 rounded-lg shadow md:col-span-1`}>
-    <div className='flex justify-between bg-cyan-900/95  p-3 rounded-md'>
-      <div>
-        <div className='bg-rose-500 text-white text-sm lg:text-lg font-medium md:px-2.5 h-6 lg:h-8 rounded-sm pb-1 px-1'>#{account.id}</div>
+  return <div style={{ backgroundImage: `url(${sprite})` }} className={`bg-no-repeat bg-center bg-contain hover:scale-[1.05] hover:border-rose-500 transition duration-300 p-1 bg-slate-100 border ${span} md:col-span-1  rounded-lg shadow `}>
+    <div className='flex justify-between bg-gray-900/95  p-2 rounded-md'>
+      <div className='flex text-center items-center'>
+        <div className='bg-rose-500 text-white text-sm font-semibold  rounded-md p-1'>#{account.id}</div>
+        <div className='w-2'></div>
         <a
           className="transititext-primary text-primary transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 active:text-primary-700 dark:text-primary-400 dark:hover:text-primary-500 dark:focus:text-primary-500 dark:active:text-primary-600"
           data-te-toggle="tooltip"
@@ -301,8 +300,8 @@ function Card({ account, pokemon }: any) {
         >
 
           <button
-            className='relative top-2'
-            onClick={() => navigator.clipboard.writeText(`#${account.id}\nPokemonCode: ${pokemon.name.toUpperCase()}\nGames:\n${account.games.join('\n')}
+            className='relative top-1'
+            onClick={() => navigator.clipboard.writeText(`#${account.id}\n[Pokemon: ${pokemon.name.toUpperCase()}]\nGames:\n${account.games.join('\n')}
             `)}>
             <svg className='bg-slate-300 border hover:bg-slate-400 hover:scale-[1.05] rounded-md' fill="" viewBox="0 0 15 15" height="1.5em" width="2em" >
               <path
@@ -315,7 +314,7 @@ function Card({ account, pokemon }: any) {
           </button>
         </a >
       </div>
-      <div className='font-bold text-white'>
+      <div className='font-bold text-sm text-white'>
         <div>Price: {account.price}</div>
         <div>Games: {account.games.length}</div>
       </div>
