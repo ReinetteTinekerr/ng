@@ -74,6 +74,7 @@ export default function Home() {
   }, [accountsIds]);
 
   useEffect(() => {
+    console.log('called');
 
     setTotalNumberOfPages(Math.ceil(searchAccounts.length / itemsPerPage));
     const startIndex = (currentPage - 1) * itemsPerPage;
@@ -231,7 +232,7 @@ export default function Home() {
 
   }
   return (
-    <main className=''>
+    <main className="bg-[url('/Colored-Shapes.svg')]">
       <div className="flex items-center justify-between pt-5 pb-5 px-5">
         <div className="relative w-64 md:w-96">
           <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -262,11 +263,11 @@ export default function Home() {
       <hr />
       <div className='mb-2'></div>
       <section className="">
-        <div className={`text-center text-[16px] md:text-3xl text-rose-800 ${pressStart2P.className}`}>Available Accounts</div>
+        <div className={`text-center text-[16px] md:text-3xl text-rose-500 ${pressStart2P.className}`}>Available Accounts</div>
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 m-8">
-          {itemsToDisplay.map((acc: any) => {
+          {itemsToDisplay.map((acc: any, index: number) => {
             const pokemon = pokemons[acc.id];
-            return <Card key={acc.id} account={acc} pokemon={pokemon} />
+            return <Card key={index} account={acc} pokemon={pokemon} />
           })}
         </div>
         <Pagination totalPages={totalNumberOfPages} totalItems={searchAccounts.length} currentPage={currentPage} onSetCurrentPage={setCurrentPage} />
@@ -288,7 +289,7 @@ function Card({ account, pokemon }: any) {
   const regex = /-?\s?\$?\[?\d+(?:\.\d{1,2})?\s?USD\]?/g;
   const regex2 = /\-?\s\$\d+(?:\.\d{1,2})?/g;
   const span = (account.games.length > 6) ? 'col-span-2' : ''
-  return <div style={{ backgroundImage: `url(${sprite})` }} className={`bg-no-repeat bg-center bg-contain hover:scale-[1.05] hover:border-rose-500 transition duration-300 p-1 bg-slate-100 border ${span} md:col-span-1  rounded-lg shadow `}>
+  return <div style={{ backgroundImage: `url(${sprite})` }} className={`bg-no-repeat bg-center bg-opacity-30 bg-contain hover:scale-[1.05] hover:border-rose-500 transition duration-300 p-1 bg-slate-100 border ${span} md:col-span-1  rounded-lg shadow `}>
     <div className='flex justify-between bg-gray-900/95  p-1 md:p-2 px-2 rounded-md'>
       <div className='flex flex-col md:flex-row text-center items-center'>
         <div className='bg-rose-500 text-white text-sm font-semibold  rounded-md p-1 md:py-1 py-0'>#{account.id}</div>
@@ -319,16 +320,16 @@ function Card({ account, pokemon }: any) {
         <div>Games: {account.games.length}</div>
       </div>
     </div>
-    <div className='hover:bg-zinc-700/95 bg-zinc-700/80 rounded-md mt-1'>
+    <div className='hover:bg-slate-100 bg-slate-200/95 rounded-md mt-1'>
 
-      <div className='p-2 text-sm text-white md:text-base'>
+      <div className='p-2 text-sm text-black md:text-base'>
         <ul>
           {account.games.map((game: any, index: number) => {
 
             const outputString1 = game.replace(regex, "");
             const outputString2 = outputString1.replace(regex2, "");
             return <li key={index}>{outputString2}
-              <hr />
+              <hr className='' />
             </li>
 
           })}

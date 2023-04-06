@@ -32,7 +32,6 @@ export default function RootLayout({
       <head />
       <body>
         <NavBar />
-
         <QueryClientProvider client={queryClient}>
           {children}
         </QueryClientProvider>
